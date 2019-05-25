@@ -679,7 +679,5 @@ class BinaryStream {
     // }
 }
 
-// module.exports = BinaryStream;
 
-
-export {Binary, BinaryStream}
+export {BinaryStream}
