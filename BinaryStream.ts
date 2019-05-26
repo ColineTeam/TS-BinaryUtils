@@ -157,7 +157,6 @@ class BinaryStream {
 
     /**
      * Read the remaining amount of bytes
-     * @return {Buffer}
      */
     getRemaining(){
         let buf = this.buffer.slice(this.offset);
@@ -484,9 +483,9 @@ class BinaryStream {
         return this;
     }
 
-    getLLong(){
-        return this.buffer.readUInt32LE(0) + (this.buffer.readUInt32LE(4) << 8);
-    }
+    // getLLong(){ //WRONG IMPLEMENT!!!
+        // return this.buffer.readUInt32LE(0) + (this.buffer.readUInt32LE(4) << 8);
+    // }
 
     putLLong(v): BinaryStream{
         let MAX_UINT32 = 0xFFFFFFFF;
