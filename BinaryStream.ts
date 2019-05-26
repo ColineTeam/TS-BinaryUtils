@@ -64,7 +64,7 @@ class BinaryStream {
      * @param len {number}
      * @return {Buffer}
      */
-    read(len: number){
+    get(len: number){
         return this.buffer.slice(this.offset, this.increaseOffset(len, true));
     }
 
@@ -159,7 +159,7 @@ class BinaryStream {
      * Read the remaining amount of bytes
      * @return {Buffer}
      */
-    readRemaining(){
+    getRemaining(){
         let buf = this.buffer.slice(this.offset);
         this.offset = this.buffer.length;
         return buf;
@@ -169,8 +169,8 @@ class BinaryStream {
      * Reads a byte boolean
      * @return {boolean}
      */
-    readBool(){
-        return this.readByte() !== 0;
+    getBool(){
+        return this.getByte() !== 0;
     }
 
     /**
@@ -178,8 +178,8 @@ class BinaryStream {
      * @param v {boolean}
      * @return {BinaryStream}
      */
-    writeBool(v: boolean): BinaryStream{
-        this.writeByte(v === true ? 0x01 : 0x00);
+    putBool(v: boolean): BinaryStream{
+        this.putByte(v === true ? 0x01 : 0x00);
         return this;
     }
 
@@ -187,7 +187,7 @@ class BinaryStream {
      * Reads a unsigned/signed byte
      * @return {number}
      */
-    readByte(): number{
+    getByte(): number{
         return this.getBuffer()[this.increaseOffset(1)];
     }
 
@@ -196,7 +196,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeByte(v: number): BinaryStream{
+    putByte(v: number): BinaryStream{
         this.append(Buffer.from([v & 0xff]));
 
         return this;
@@ -206,7 +206,7 @@ class BinaryStream {
      * Reads a 16-bit unsigned or signed big-endian number
      * @return {number}
      */
-    readShort(): number{
+    getShort(): number{
         return this.buffer.readUInt16BE(this.increaseOffset(2));
     }
 
@@ -215,7 +215,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeShort(v: number): BinaryStream{
+    putShort(v: number): BinaryStream{
         let buf = Buffer.alloc(2);
         buf.writeUInt16BE(v, 0);
         this.append(buf);
@@ -227,7 +227,7 @@ class BinaryStream {
      * Reads a 16-bit signed big-endian number
      * @return {number}
      */
-    readSignedShort(): number{
+    getSignedShort(): number{
         return this.buffer.readInt16BE(this.increaseOffset(2));
     }
 
@@ -236,7 +236,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeSignedShort(v: number): BinaryStream{
+    putSignedShort(v: number): BinaryStream{
         let buf = Buffer.alloc(2);
         buf.writeInt16BE(v, 0);
         this.append(buf);
@@ -248,7 +248,7 @@ class BinaryStream {
      * Reads a 16-bit unsigned little-endian number
      * @return {number}
      */
-    readLShort(): number{
+    getLShort(): number{
         return this.buffer.readUInt16LE(this.increaseOffset(2));
     }
 
@@ -257,7 +257,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeLShort(v:number): BinaryStream{
+    putLShort(v:number): BinaryStream{
         let buf = Buffer.alloc(2);
         buf.writeUInt16LE(v, 0);
         this.append(buf);
@@ -269,7 +269,7 @@ class BinaryStream {
      * Reads a 16-bit signed little-endian number
      * @return {number}
      */
-    readSignedLShort(): number{
+    getSignedLShort(): number{
         return this.buffer.readInt16LE(this.increaseOffset(2));
     }
 
@@ -278,7 +278,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeSignedLShort(v: number): BinaryStream{
+    putSignedLShort(v: number): BinaryStream{
         let buf = Buffer.alloc(2);
         buf.writeInt16LE(v, 0);
         this.append(buf);
@@ -290,7 +290,7 @@ class BinaryStream {
      * Reads a 3-byte big-endian number
      * @return {number}
      */
-    readTriad(): number{
+    getTriad(): number{
         return this.buffer.readUIntBE(this.increaseOffset(3), 3);
     }
 
@@ -299,7 +299,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeTriad(v: number): BinaryStream{
+    putTriad(v: number): BinaryStream{
         let buf = Buffer.alloc(3);
         buf.writeUIntBE(v, 0, 3);
         this.append(buf);
@@ -311,7 +311,7 @@ class BinaryStream {
      * Reads a 3-byte little-endian number
      * @return {number}
      */
-    readLTriad(): number{
+    getLTriad(): number{
         return this.buffer.readUIntLE(this.increaseOffset(3), 3);
     }
 
@@ -320,7 +320,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeLTriad(v: number): BinaryStream{
+    putLTriad(v: number): BinaryStream{
         let buf = Buffer.alloc(3);
         buf.writeUIntLE(v, 0, 3);
         this.append(buf);
@@ -332,7 +332,7 @@ class BinaryStream {
      * Reads a 32-bit signed big-endian number
      * @return {number}
      */
-    readInt(): number{
+    getInt(): number{
         return this.buffer.readInt32BE(this.increaseOffset(4));
     }
 
@@ -341,7 +341,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeInt(v: number): BinaryStream{
+    putInt(v: number): BinaryStream{
         let buf = Buffer.alloc(4);
         buf.writeInt32BE(v, 0);
         this.append(buf);
@@ -353,7 +353,7 @@ class BinaryStream {
      * Reads a 32-bit signed little-endian number
      * @return {number}
      */
-    readLInt(): number{
+    getLInt(): number{
         return this.buffer.readInt32LE(this.increaseOffset(4));
     }
 
@@ -362,7 +362,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeLInt(v: number){
+    putLInt(v: number){
         let buf = Buffer.alloc(4);
         buf.writeInt32LE(v, 0);
         this.append(buf);
@@ -373,7 +373,7 @@ class BinaryStream {
     /**
      * @return {number}
      */
-    readFloat(): number{
+    getFloat(): number{
         return this.buffer.readFloatBE(this.increaseOffset(4));
     }
 
@@ -389,7 +389,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeFloat(v: number): BinaryStream {
+    putFloat(v: number): BinaryStream {
         let buf = Buffer.alloc(8);
         let bytes = buf.writeFloatBE(v, 0);
         this.append(buf.slice(0, bytes));
@@ -400,7 +400,7 @@ class BinaryStream {
     /**
      * @return {number}
      */
-    readLFloat(): number{
+    getLFloat(): number{
         return this.buffer.readFloatLE(this.increaseOffset(4));
     }
 
@@ -416,7 +416,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeLFloat(v: number): BinaryStream{
+    putLFloat(v: number): BinaryStream{
         let buf = Buffer.alloc(8);
         let bytes = buf.writeFloatLE(v, 0);
         this.append(buf.slice(0, bytes));
@@ -427,7 +427,7 @@ class BinaryStream {
     /**
      * @return {number}
      */
-    readDouble(): number{
+    getDouble(): number{
         return this.buffer.readDoubleBE(this.increaseOffset(8));
     }
 
@@ -435,7 +435,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeDouble(v:number): BinaryStream {
+    putDouble(v:number): BinaryStream {
         let buf = Buffer.alloc(8);
         buf.writeDoubleBE(v, 0);
         this.append(buf);
@@ -446,7 +446,7 @@ class BinaryStream {
     /**
      * @return {number}
      */
-    readLDouble(){
+    getLDouble(){
         return this.buffer.readDoubleLE(this.increaseOffset(8));
     }
 
@@ -454,7 +454,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeLDouble(v: number){
+    putLDouble(v: number){
         let buf = Buffer.alloc(8);
         buf.writeDoubleLE(v, 0);
         this.append(buf);
@@ -465,7 +465,7 @@ class BinaryStream {
     /**
      * @return {number}
      */
-    readLong(): number{
+    getLong(): number{
         return (this.buffer.readUInt32BE(this.increaseOffset(4)) << 8) + this.buffer.readUInt32BE(this.increaseOffset(4));
     }
 
@@ -473,7 +473,7 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeLong(v: number): BinaryStream{
+    putLong(v: number): BinaryStream{
         let MAX_UINT32 = 0xFFFFFFFF;
 
         let buf = Buffer.alloc(8);
@@ -484,11 +484,11 @@ class BinaryStream {
         return this;
     }
 
-    readLLong(){
+    getLLong(){
         return this.buffer.readUInt32LE(0) + (this.buffer.readUInt32LE(4) << 8);
     }
 
-    writeLLong(v): BinaryStream{
+    putLLong(v): BinaryStream{
         let MAX_UINT32 = 0xFFFFFFFF;
 
         let buf = Buffer.alloc(8);
@@ -502,11 +502,11 @@ class BinaryStream {
     /**
      * @return {number}
      */
-    readUnsignedVarInt(): number{
+    getUnsignedVarInt(): number{
         let value = 0;
 
         for(let i = 0; i <= 35; i += 7){
-            let b = this.readByte();
+            let b = this.getByte();
             value |= ((b & 0x7f) << i);
 
             if((b & 0x80) === 0){
@@ -521,14 +521,14 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeUnsignedVarInt(v: number): BinaryStream{
+    putUnsignedVarInt(v: number): BinaryStream{
         let stream = new BinaryStream();
 
         for(let i = 0; i < 5; i++){
             if((v >> 7) !== 0){
-                stream.writeByte(v | 0x80);
+                stream.putByte(v | 0x80);
             }else{
-                stream.writeByte(v & 0x7f);
+                stream.putByte(v & 0x7f);
                 break;
             }
             v >>= 7;
@@ -542,8 +542,8 @@ class BinaryStream {
     /**
      * @return {number}
      */
-    readVarInt(): number{
-        let raw = this.readUnsignedVarInt();
+    getVarInt(): number{
+        let raw = this.getUnsignedVarInt();
         let tmp = (((raw << 63) >> 63) ^ raw) >> 1;
         return tmp ^ (raw & (1 << 63));
     }
@@ -552,18 +552,18 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeVarInt(v: number): BinaryStream{
+    putVarInt(v: number): BinaryStream{
         v <<= 32 >> 32;
-        return this.writeUnsignedVarInt((v << 1) ^ (v >> 31));
+        return this.putUnsignedVarInt((v << 1) ^ (v >> 31));
     }
 
     /**
      * @return {number}
      */
-    readUnsignedVarLong(): number{
+    getUnsignedVarLong(): number{
         let value = 0;
         for(let i = 0; i <= 63; i += 7){
-            let b = this.readByte();
+            let b = this.getByte();
             value |= ((b & 0x7f) << i);
 
             if((b & 0x80) === 0){
@@ -577,12 +577,12 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeUnsignedVarLong(v: number): BinaryStream{
+    putUnsignedVarLong(v: number): BinaryStream{
         for(let i = 0; i < 10; i++){
             if((v >> 7) !== 0){
-                this.writeByte(v | 0x80);
+                this.putByte(v | 0x80);
             }else{
-                this.writeByte(v & 0x7f);
+                this.putByte(v & 0x7f);
                 break;
             }
             v >>= 7;
@@ -594,8 +594,8 @@ class BinaryStream {
     /**
      * @return {number}
      */
-    readVarLong(): number{
-        let raw = this.readUnsignedVarLong();
+    getVarLong(): number{
+        let raw = this.getUnsignedVarLong();
         let tmp = (((raw << 63) >> 63) ^ raw) >> 1;
         return tmp ^ (raw & (1 << 63));
     }
@@ -604,8 +604,8 @@ class BinaryStream {
      * @param v {number}
      * @return {BinaryStream}
      */
-    writeVarLong(v: number): BinaryStream{
-        return this.writeUnsignedVarLong((v << 1) ^ (v >> 63));
+    putVarLong(v: number): BinaryStream{
+        return this.putUnsignedVarLong((v << 1) ^ (v >> 63));
     }
 
     // /**
@@ -660,7 +660,7 @@ class BinaryStream {
      * @param v {string}
      * @return {BinaryStream}
      */
-    writeString(v:string): BinaryStream{
+    putString(v:string): BinaryStream{
         this.append(Buffer.from(v, "utf8"));
         return this;
     }
