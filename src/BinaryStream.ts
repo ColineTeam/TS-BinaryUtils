@@ -1,38 +1,7 @@
 //from: https://github.com/PocketNode/PocketNode-BinaryStream/blob/master/src/BinaryStream.js
-
-import {BinaryDataException} from './BinaryDataException'
-
-
-// class BinaryStream {
-//     public buffer: Buffer;
-//     public offset: Int = 0;
-
-//     constructor(buffer: Buffer){
-//         this.buffer = buffer;
-//     }
-//     get(len: int){
-//         if(len <= 0){
-//             return null;
-//         }
-//         let remaining = this.buffer.length - this.offset;
-//         if(remaining <= 0 ) throw new Error('Not enough bytes left in buffer: need '+len+', have '+remaining)
-
-//         return len === 1 ? this.buffer[this.offset++] : this.buffer.slice((this.offset += len)-len, len)
-//     }
-//     getRemaining(){
-//         let buf = this.buffer.slice(this.offset);
-//         if(buf.length == 0){
-//             throw new BinaryDataException("No bytes left to read");
-//         }
-//         this.offset = buf.length;
-//         return buf;
-//     }
-//     putBool(v: boolean){
-//         console.warn("\x01");
-//         this.buffer[this.buffer.length] = (v ? "\x01" : "\x00");
-//         console.log(this.buffer[this.buffer.length])
-// 	}
-// }
+class BinaryDataException extends Error{
+    
+}
 
 class BinaryStream {
     public buffer: Buffer;
