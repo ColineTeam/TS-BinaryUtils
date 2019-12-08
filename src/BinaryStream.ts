@@ -456,16 +456,16 @@ class BinaryStream {
         // return this.buffer.readUInt32LE(0) + (this.buffer.readUInt32LE(4) << 8);
     // }
 
-    putLLong(v): BinaryStream{
-        let MAX_UINT32 = 0xFFFFFFFF;
-
-        let buf = Buffer.alloc(8);
-        buf.writeUInt32LE((v & MAX_UINT32), 0);
-        buf.writeUInt32LE((~~(v / MAX_UINT32)), 4);
-        this.append(buf);
-
-        return this;
-    }
+    // putLLong(v): BinaryStream{
+    //     let MAX_UINT32 = 0xFFFFFFFF;
+    //
+    //     let buf = Buffer.alloc(8);
+    //     buf.writeUInt32LE((v & MAX_UINT32), 0);
+    //     buf.writeUInt32LE((~~(v / MAX_UINT32)), 4);
+    //     this.append(buf);
+    //
+    //     return this;
+    // }
 
     /**
      * @return {number}
