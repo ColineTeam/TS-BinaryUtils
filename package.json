@@ -1,6 +1,9 @@
 {
   "name": "colineteam-binarystream",
   "description": "BinaryStream like pmmp/BinaryStream based on PocketNode/PocketNode-BinaryStream\n",
-  "version": "0.0.4",
-  "repository": "git@github.com:ColineTeam/TS-BinaryUtils.git"
+  "version": "0.0.4-fix2",
+  "repository": "git@github.com:ColineTeam/TS-BinaryUtils.git",
+  "dependencies": {
+    "@types/node": "^12.0.2"
+  }
 }
